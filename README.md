@@ -1,1 +1,1 @@
-Koboldcpp powered plugin to let your model precedurally generate your notes. Shift+Enter to generate.
+Chat with your notes or let an AI finish your thought.
