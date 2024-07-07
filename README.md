@@ -23,6 +23,6 @@ If you want to use ChatGPT the official openai API is also supported.
 
 
 Coming Soon:
--[] Image integration - using vision to interpret images in your notes, and image generation
--[] Embeddings for RAG
--[] Fixing the styling
+- [ ] Image integration - using vision to interpret images in your notes, and image generation
+- [ ] Embeddings for RAG
+- [ ] Fixing the styling
