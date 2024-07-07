@@ -1,0 +1,42 @@
+.ai-container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px 20px 100px 20px;
+  border-radius: 5px;
+  height: 87vh;
+}
+
+#CWNHeadding {
+  padding: 20px 30px;
+  font-size: 2.4em;
+  margin-top: 5px;
+  position: absolute !important;
+  margin-bottom: 50px;
+}
+
+.ai-container textarea {
+  border: 1px solid #ccc;
+  padding: 3px 5%;
+  margin-bottom: 35px;
+  height: 65px;
+  width: 67%;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 5px;
+  font-size: 1.1em;
+}
+
+.ai-copyable {
+  margin-top: -30px;
+  margin-bottom: 50px;
+  position: relative;
+  overflow-wrap: break-word;
+  cursor: auto;
+  overflow-y: auto;
+}
+
+.ai-copyable p {
+  background: #38383f;
+  padding: 0.3em;
+  border-radius: 4px;
+}
