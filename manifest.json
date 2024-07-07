@@ -1,6 +1,6 @@
 {
 	"id": "chat-with-notes",
-	"name": "Chat With Notes",
+	"name": "Chat with Notes",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Another AI interface to chat with your notes, focusing on free services",
