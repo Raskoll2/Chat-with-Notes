@@ -1,5 +1,5 @@
 {
-	"name": "Chat With Notes",
+	"name": "Chat with Notes",
 	"version": "1.0.0",
 	"description": "Another AI interface to chat with your notes, focusing on free services",
 	"main": "main.js",
