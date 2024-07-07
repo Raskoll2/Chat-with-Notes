@@ -1,6 +1,6 @@
 {
-	"name": "Chat with Notes",
-	"version": "1.0.0",
+	"name": "Chat With Notes",
+	"version": "1.0.1",
 	"description": "Another AI interface to chat with your notes, focusing on free services",
 	"main": "main.js",
 	"scripts": {
@@ -8,7 +8,7 @@
 		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"
 	},
-	"keywords": [Chat, AI, free, llm],
+	"keywords": ["Chat", "AI", "free", "llm"],
 	"author": "Raskoll",
 	"license": "MIT",
 	"devDependencies": {
