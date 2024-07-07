@@ -57,9 +57,6 @@ export default class askAIPlugin extends Plugin {
         // Normalize the path without enclosing it in double quotes
         const normalizedPluginDirectoryPath = path.normalize(pluginDirectoryPath);
 
-        // Print the plugin directory path for debugging
-        console.log('Plugin Directory Path:', normalizedPluginDirectoryPath);
-
 
         this.addCommand({
             id: 'expand',
@@ -79,33 +76,6 @@ export default class askAIPlugin extends Plugin {
             this.activateView();
         });
 
-
-        //Test Internet connection with api request
-        const axios = require('axios');
-        axios.get('https://httpbin.org/get')
-            .then((response) => {
-                console.log('Connected to OpenAI API');
-            })
-            .catch((error) => {
-                //Try though a proxy
-                axios.get('https://httpbin.org/get', {
-                    proxy: {
-                        host: 'proxy2.eq.edu.au',
-                        port: 8080,
-                        auth: {
-                            username: 'hzeml1',
-                            password: 'Minecraft64!'
-                        }
-                    }
-                })
-                .then((response) => {
-                    console.log('Successful API request through proxy!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-                })
-                .catch((error) => {
-                    console.log('Probably CORS, failed to connect to OpenAI API: ', error);
-                });
-
-            });
     }
 
     onunload() {
@@ -178,7 +148,6 @@ export default class askAIPlugin extends Plugin {
     }
 
     async getAIResponse(prompt: string, cursor, content, editor) {
-        console.log(this.settings.completionProvider);
 
         const headers = {
             'accept': 'application/json',
@@ -234,8 +203,6 @@ export default class askAIPlugin extends Plugin {
 
             const imageParts = []
 
-            console.log(imageFileNames);
-
             for (const fileName of imageFileNames) {
                 // Convert the file extension to lowercase
                 const extension = fileName.split('.').pop()?.toLowerCase() || '';
@@ -243,7 +210,6 @@ export default class askAIPlugin extends Plugin {
                 const fileExtension = extension.includes('jpg') ? 'jpeg' : extension;
                 // Log the filename and the path
                 imageParts.push(fileToGenerativePart(vaultBasePath+fileName, 'images/' + fileExtension));
-                console.log(`Filename: ${fileName}, Path: ${vaultBasePath+fileName}`);
             }
 
 
@@ -267,31 +233,25 @@ export default class askAIPlugin extends Plugin {
 
             let text = '';
 
-            console.log(prompt);
-
             for await (const chunk of result.stream) {
                 const offset = editor.posToOffset(cursor);
                 text += chunk.text();
 
-                var newText = content.substring(0, offset) + text + content.substring(offset);
-
-                //newText = newText.slice(0, -"undefined".length);
+                let newText = content.substring(0, offset) + text + content.substring(offset);
                 
                 editor.setValue(newText); 
             }
 
-
-
-
             break;
         
+
 
 
         default:
             
             const OpenAI = require("openai");
 
-            var modelId = "";
+            let modelId = "";
 
             switch (this.settings.completionProvider) {
             case "openai": 
@@ -332,13 +292,12 @@ export default class askAIPlugin extends Plugin {
                     dangerouslyAllowBrowser: true,
                 });
 
-                console.log("Using Custom Endpoint: " + this.settings.customUrl);
                 const models = await openai.models.list();
                 modelId = models.data[0].id;
                 break;
 
             default:
-                console.log("Invalid completion provider");
+                console.log("Error: Invalid completion provider");
                 break;
             }
 
@@ -353,13 +312,12 @@ export default class askAIPlugin extends Plugin {
                 max_tokens: this.settings.maxTokens,
             });
 
-            var lastHope = "";
+            let lastHope = "";
 
             for await (const chunk of stream) {
                 const offset = editor.posToOffset(cursor);
-                console.log(chunk.choices[0].text);
                 lastHope += chunk.choices[0].text;
-                var newText = content.substring(0, offset) + lastHope + content.substring(offset);
+                let newText = content.substring(0, offset) + lastHope + content.substring(offset);
                 
                 editor.setValue(newText); 
                 editor.setCursor(editor.offsetToPos(offset + lastHope.length));
@@ -368,19 +326,5 @@ export default class askAIPlugin extends Plugin {
         }
 
     }
-
-    async loadingAnimation(editor) {
-        const animation = "_.-~*^*~-._";
-        let i = 0;
-        /*while (this.isWriting) {
-            console.log(animation[i]);
-            editor.setValue(animation[i]);
-            i = (i + 1) % animation.length;
-            await new Promise((resolve) => setTimeout(resolve, 100));
-        }*/
-
-    }
-
-
 
 }

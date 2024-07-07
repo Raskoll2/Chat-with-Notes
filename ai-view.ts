@@ -1,7 +1,5 @@
 import { ItemView, WorkspaceLeaf, requestUrl } from 'obsidian';
-import axios from 'axios';
 import { askAISettingTab } from './settings';
-//import * as marked from 'marked';
 
 export const AI_VIEW_TYPE = 'ai-view';
 
@@ -126,28 +124,30 @@ export class AIView extends ItemView {
 
     private showAttachOptions() {
         // Remove existing attach options if any
-        this.removeAttachOptions();
+        if (this.attachOptionsEl) {
+            this.removeAttachOptions();
+        } else {
+            this.attachOptionsEl = document.createElement('div');
+            this.attachOptionsEl.addClass('attach-options');
+            this.attachOptionsEl.style.position = 'absolute';
+            this.attachOptionsEl.style.bottom = '100px';
+            this.attachOptionsEl.style.right = '10px';
+            this.attachOptionsEl.style.background = 'var(--color-base-10)';
+            this.attachOptionsEl.style.borderRadius = '10px';
+            this.attachOptionsEl.style.padding = '15px';
+            this.attachOptionsEl.style.zIndex = '1000';
 
-        this.attachOptionsEl = document.createElement('div');
-        this.attachOptionsEl.addClass('attach-options');
-        this.attachOptionsEl.style.position = 'absolute';
-        this.attachOptionsEl.style.bottom = '100px';
-        this.attachOptionsEl.style.right = '10px';
-        this.attachOptionsEl.style.background = 'var(--color-base-10)';
-        this.attachOptionsEl.style.borderRadius = '10px';
-        this.attachOptionsEl.style.padding = '15px';
-        this.attachOptionsEl.style.zIndex = '1000';
+            const attachThisNoteBtn = this.attachOptionsEl.createEl('button', { text: 'Current note' });
+            attachThisNoteBtn.addEventListener('click', () => this.attachCurrentNote());
 
-        const attachThisNoteBtn = this.attachOptionsEl.createEl('button', { text: 'Current note' });
-        attachThisNoteBtn.addEventListener('click', () => this.attachCurrentNote());
+            const searchInput = this.attachOptionsEl.createEl('input', { type: 'text', placeholder: 'Search for a note...' });
+            searchInput.addEventListener('input', () => this.searchNotes(searchInput.value));
+            searchInput.style.marginLeft = "10px";
 
-        const searchInput = this.attachOptionsEl.createEl('input', { type: 'text', placeholder: 'Search for a note...' });
-        searchInput.addEventListener('input', () => this.searchNotes(searchInput.value));
-        searchInput.style.marginLeft = "10px";
+            const searchResults = this.attachOptionsEl.createEl('div', { cls: 'search-results' });
 
-        const searchResults = this.attachOptionsEl.createEl('div', { cls: 'search-results' });
-
-        this.containerEl.appendChild(this.attachOptionsEl);
+            this.containerEl.appendChild(this.attachOptionsEl);
+        }
     }
 
     private removeAttachOptions() {

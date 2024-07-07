@@ -142,7 +142,6 @@ export class askAISettingTab extends PluginSettingTab {
           .onChange(async (value) => {
             this.plugin.settings.groqModel = value;
             await this.plugin.saveSettings();
-            console.log(this.plugin.settings.groqModel);
           })
       );
       
